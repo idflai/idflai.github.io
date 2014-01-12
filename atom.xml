@@ -4,7 +4,7 @@
   <title><![CDATA[Aries's Blog]]></title>
   <link href="http://idflai.github.io/atom.xml" rel="self"/>
   <link href="http://idflai.github.io/"/>
-  <updated>2014-01-12T15:48:18+08:00</updated>
+  <updated>2014-01-12T17:27:00+08:00</updated>
   <id>http://idflai.github.io/</id>
   <author>
     <name><![CDATA[Aries]]></name>
@@ -24,7 +24,9 @@ title: &ldquo;我的第一篇 octopress blog&rdquo;
 date: 2014-01-12 14:20:15 +0800
 comments: true</p>
 
-<h2>categories: </h2>
+<h2>categories: Octopress</h2>
+
+<p>第一篇测试博客</p>
 ]]></content>
   </entry>
   
