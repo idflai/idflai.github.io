@@ -9,8 +9,9 @@
   <meta name="author" content="Aries">
 
   
-  <meta name="description" content="测试内容
-">
+  <meta name="description" content="突然想利用Blog记录自己工作上的一些心得以及作为一个FAQ，然后从同事那里得知了这么一个平台，于是开始试着折腾（windows下搭建这个真的挺麻烦的）。
+先记录下自己搭建的过程吧。 参考文章：
+http://www.cnblogs.com/oec2003/archive/2013/05/27/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -96,7 +97,81 @@
   </header>
 
 
-<div class="entry-content"><p>测试内容</p>
+<div class="entry-content"><p>突然想利用Blog记录自己工作上的一些心得以及作为一个FAQ，然后从同事那里得知了这么一个平台，于是开始试着折腾（windows下搭建这个真的挺麻烦的）。
+先记录下自己搭建的过程吧。 <!--more--></p>
+
+<p>参考文章：
+<a href="http://www.cnblogs.com/oec2003/archive/2013/05/27/3100896.html">http://www.cnblogs.com/oec2003/archive/2013/05/27/3100896.html</a>
+<a href="http://www.cnblogs.com/oec2003/archive/2013/05/31/3109577.html">http://www.cnblogs.com/oec2003/archive/2013/05/31/3109577.html</a></p>
+
+<p>一、下载相应的软件</p>
+
+<p>本人用的是Windows 8.1</p>
+
+<p>GitHub for windows: <a href="https://github-windows.s3.amazonaws.com/GitHubSetup.exe">https://github-windows.s3.amazonaws.com/GitHubSetup.exe</a></p>
+
+<p>Ruby: <a href="http://rubyforge.org/frs/download.php/76798/rubyinstaller-1.9.3-p392.exe">http://rubyforge.org/frs/download.php/76798/rubyinstaller-1.9.3-p392.exe</a></p>
+
+<p>DevKit: <a href="http://cloud.github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">http://cloud.github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a></p>
+
+<p>Python：<a href="http://www.python.org/ftp/python/2.7.5/python-2.7.5.msi">http://www.python.org/ftp/python/2.7.5/python-2.7.5.msi</a>(貌似是用来高亮语法用的，可以暂时不装)</p>
+
+<p>Octopress: git://github.com/imathis/octopress.git(先不用下)</p>
+
+<p>二、安装软件</p>
+
+<p>GitHub
+直接安装，也没什么选的。</p>
+
+<p>Ruby
+要在DevKit之前安装。安装的时候有个步骤有选项，我只选了前两个</p>
+
+<p>DevKit
+解压，路径中没有中文，然后在命令行中进入到DevKit的目录下安装
+例如：
+cd E:\DevKit
+e:
+ruby dk.rb init
+ruby dk.rb install</p>
+
+<p>我没装Python……所以请参照参考文章</p>
+
+<p>Octopress
+我在E盘专门建立了个GitHub文件夹放blog的工程文件
+cd E:\GitHub
+git clone git://github.com/imathis/octopress.git octopress</p>
+
+<p>安装octopress的依赖项。我没有更换source。</p>
+
+<p>gem install bundler
+bundle install</p>
+
+<p>安装octopress默认主题</p>
+
+<p>rake install</p>
+
+<p>然后可以预览了</p>
+
+<p>rake preview</p>
+
+<p>在浏览器中打开local:4000就可以看到blog的原始页面</p>
+
+<p>三、使用中文</p>
+
+<p>如果要在blog中使用中文，需要做些设置。
+1.添加系统环境变量
+LANG=zh_CN.UTF-8
+LC_ALL=zh_CN.UTF-8</p>
+
+<p>2.含有中文的文档要保存成UTF-8无BOM编码格式。
+win的记事本无法做到，推荐使用UltraEdit
+<a href="http://down.05sun.com/crack/UltraEdit_SC.rar">http://down.05sun.com/crack/UltraEdit_SC.rar</a></p>
+
+<p>3.在ruby安装路径下找到文件convertible.rb
+例如：
+E:\Ruby193\lib\ruby\gems\1.9.1\gems\jekyll-0.12.0\lib\jekyll\convertible.rb
+把self.content这行修改成
+self.content = File.read(File.join(base, name), :encoding => &lsquo;utf-8&rsquo;)</p>
 </div>
 
 
@@ -133,8 +208,6 @@
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://idflai.github.io/blog/2014/01/12/my-first-octopress-blog/" data-via="" data-counturl="http://idflai.github.io/blog/2014/01/12/my-first-octopress-blog/" >Tweet</a>
-  
   
   
 </div>
@@ -158,13 +231,13 @@
 <aside class="sidebar">
   
     <section> 
-  <h1>文章分类</h1> 
+  <h1>Categories</h1> 
   <ul id="categories"> 
     <li class='category'><a href='/blog/categories/octopress/'>Octopress (1)</a></li>
  
   </ul> 
-</section>﻿<section>
-  <h1>最新发表</h1>
+</section><section>
+  <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
@@ -213,16 +286,6 @@
 
 
 
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 
