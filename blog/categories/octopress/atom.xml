@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Aries's Blog]]></title>
-  <link href="http://idflai.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Octopress | Aries's Blog]]></title>
+  <link href="http://idflai.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://idflai.github.io/"/>
   <updated>2014-01-12T18:35:39+08:00</updated>
   <id>http://idflai.github.io/</id>
