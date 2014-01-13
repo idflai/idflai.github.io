@@ -4,7 +4,7 @@
   <title><![CDATA[Aries's Blog]]></title>
   <link href="http://idflai.github.io/atom.xml" rel="self"/>
   <link href="http://idflai.github.io/"/>
-  <updated>2014-01-13T12:22:07+08:00</updated>
+  <updated>2014-01-13T12:35:33+08:00</updated>
   <id>http://idflai.github.io/</id>
   <author>
     <name><![CDATA[Aries]]></name>
@@ -45,23 +45,36 @@ Octopress: git://github.com/imathis/octopress.git(先不用下)</p>
 
 <p>DevKit    <br />
 解压，路径中没有中文，然后在命令行中进入到DevKit的目录下安装    <br />
-例如：    <br />
-cd E:\DevKit    <br />
-e:    <br />
-ruby dk.rb init     <br />
-ruby dk.rb install</p>
+例如：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd E:\DevKit  
+</span><span class='line'>e:  
+</span><span class='line'>ruby dk.rb init   
+</span><span class='line'>ruby dk.rb install    </span></code></pre></td></tr></table></div></figure>
+
 
 <p>我没装Python……所以请参照参考文章</p>
 
 <p>Octopress    <br />
-我在E盘专门建立了个GitHub文件夹放blog的工程文件    <br />
-cd E:\GitHub     <br />
-git clone git://github.com/imathis/octopress.git octopress     <br /></p>
+我在E盘专门建立了个GitHub文件夹放blog的工程文件</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd E:\GitHub    
+</span><span class='line'>git clone git://github.com/imathis/octopress.git octopress     </span></code></pre></td></tr></table></div></figure>
+
 
 <p>安装octopress的依赖项。我没有更换source。</p>
 
-<p>gem install bundler    <br />
-bundle install</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install bundler   
+</span><span class='line'>bundle install    </span></code></pre></td></tr></table></div></figure>
+
 
 <p>安装octopress默认主题</p>
 
@@ -75,10 +88,15 @@ bundle install</p>
 
 <p>三、使用中文</p>
 
-<p>如果要在blog中使用中文，需要做些设置。    <br />
-1.添加系统环境变量    <br />
-LANG=zh_CN.UTF-8     <br />
-LC_ALL=zh_CN.UTF-8</p>
+<p>如果要在blog中使用中文，需要做些设置。</p>
+
+<p>1.添加系统环境变量</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>LANG=zh_CN.UTF-8     
+</span><span class='line'>LC_ALL=zh_CN.UTF-8</span></code></pre></td></tr></table></div></figure>
+
 
 <p>2.含有中文的文档要保存成UTF-8无BOM编码格式。     <br />
 win的记事本无法做到，推荐使用UltraEdit     <br />
