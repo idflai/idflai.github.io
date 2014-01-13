@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Aries's Blog]]></title>
   <link href="http://idflai.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://idflai.github.io/"/>
-  <updated>2014-01-13T11:34:31+08:00</updated>
+  <updated>2014-01-13T12:22:07+08:00</updated>
   <id>http://idflai.github.io/</id>
   <author>
     <name><![CDATA[Aries]]></name>
@@ -21,50 +21,46 @@
     <content type="html"><![CDATA[<p>突然想利用Blog记录自己工作上的一些心得以及作为一个FAQ，然后从同事那里得知了这么一个平台，于是开始试着折腾（windows下搭建这个真的挺麻烦的）。
 先记录下自己搭建的过程吧。 <!--more--></p>
 
-<p>参考文章：
-<a href="http://www.cnblogs.com/oec2003/archive/2013/05/27/3100896.html">http://www.cnblogs.com/oec2003/archive/2013/05/27/3100896.html</a>
+<p>参考文章：   <br />
+<a href="http://www.cnblogs.com/oec2003/archive/2013/05/27/3100896.html">http://www.cnblogs.com/oec2003/archive/2013/05/27/3100896.html</a>    <br />
 <a href="http://www.cnblogs.com/oec2003/archive/2013/05/31/3109577.html">http://www.cnblogs.com/oec2003/archive/2013/05/31/3109577.html</a></p>
 
 <p>一、下载相应的软件</p>
 
 <p>本人用的是Windows 8.1</p>
 
-<p>GitHub for windows: <a href="https://github-windows.s3.amazonaws.com/GitHubSetup.exe">https://github-windows.s3.amazonaws.com/GitHubSetup.exe</a></p>
-
-<p>Ruby: <a href="http://rubyforge.org/frs/download.php/76798/rubyinstaller-1.9.3-p392.exe">http://rubyforge.org/frs/download.php/76798/rubyinstaller-1.9.3-p392.exe</a></p>
-
-<p>DevKit: <a href="http://cloud.github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">http://cloud.github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a></p>
-
-<p>Python：<a href="http://www.python.org/ftp/python/2.7.5/python-2.7.5.msi">http://www.python.org/ftp/python/2.7.5/python-2.7.5.msi</a>(貌似是用来高亮语法用的，可以暂时不装)</p>
-
-<p>Octopress: git://github.com/imathis/octopress.git(先不用下)</p>
+<p>GitHub for windows: <a href="https://github-windows.s3.amazonaws.com/GitHubSetup.exe">https://github-windows.s3.amazonaws.com/GitHubSetup.exe</a>   <br />
+Ruby: <a href="http://rubyforge.org/frs/download.php/76798/rubyinstaller-1.9.3-p392.exe">http://rubyforge.org/frs/download.php/76798/rubyinstaller-1.9.3-p392.exe</a>  <br />
+DevKit: <a href="http://cloud.github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">http://cloud.github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a>   <br />
+Python：<a href="http://www.python.org/ftp/python/2.7.5/python-2.7.5.msi">http://www.python.org/ftp/python/2.7.5/python-2.7.5.msi</a>(貌似是用来高亮语法用的，可以暂时不装)   <br />
+Octopress: git://github.com/imathis/octopress.git(先不用下)</p>
 
 <p>二、安装软件</p>
 
-<p>GitHub
+<p>GitHub    <br />
 直接安装，也没什么选的。</p>
 
-<p>Ruby
+<p>Ruby    <br />
 要在DevKit之前安装。安装的时候有个步骤有选项，我只选了前两个</p>
 
-<p>DevKit
-解压，路径中没有中文，然后在命令行中进入到DevKit的目录下安装
-例如：
-cd E:\DevKit
-e:
-ruby dk.rb init
+<p>DevKit    <br />
+解压，路径中没有中文，然后在命令行中进入到DevKit的目录下安装    <br />
+例如：    <br />
+cd E:\DevKit    <br />
+e:    <br />
+ruby dk.rb init     <br />
 ruby dk.rb install</p>
 
 <p>我没装Python……所以请参照参考文章</p>
 
-<p>Octopress
-我在E盘专门建立了个GitHub文件夹放blog的工程文件
-cd E:\GitHub
-git clone git://github.com/imathis/octopress.git octopress</p>
+<p>Octopress    <br />
+我在E盘专门建立了个GitHub文件夹放blog的工程文件    <br />
+cd E:\GitHub     <br />
+git clone git://github.com/imathis/octopress.git octopress     <br /></p>
 
 <p>安装octopress的依赖项。我没有更换source。</p>
 
-<p>gem install bundler
+<p>gem install bundler    <br />
 bundle install</p>
 
 <p>安装octopress默认主题</p>
@@ -79,19 +75,19 @@ bundle install</p>
 
 <p>三、使用中文</p>
 
-<p>如果要在blog中使用中文，需要做些设置。
-1.添加系统环境变量
-LANG=zh_CN.UTF-8
+<p>如果要在blog中使用中文，需要做些设置。    <br />
+1.添加系统环境变量    <br />
+LANG=zh_CN.UTF-8     <br />
 LC_ALL=zh_CN.UTF-8</p>
 
-<p>2.含有中文的文档要保存成UTF-8无BOM编码格式。
-win的记事本无法做到，推荐使用UltraEdit
+<p>2.含有中文的文档要保存成UTF-8无BOM编码格式。     <br />
+win的记事本无法做到，推荐使用UltraEdit     <br />
 <a href="http://down.05sun.com/crack/UltraEdit_SC.rar">http://down.05sun.com/crack/UltraEdit_SC.rar</a></p>
 
-<p>3.在ruby安装路径下找到文件convertible.rb
-例如：
-E:\Ruby193\lib\ruby\gems\1.9.1\gems\jekyll-0.12.0\lib\jekyll\convertible.rb
-把self.content这行修改成
+<p>3.在ruby安装路径下找到文件convertible.rb    <br />
+例如：     <br />
+E:\Ruby193\lib\ruby\gems\1.9.1\gems\jekyll-0.12.0\lib\jekyll\convertible.rb    <br />
+把self.content这行修改成     <br />
 self.content = File.read(File.join(base, name), :encoding => &lsquo;utf-8&rsquo;)</p>
 ]]></content>
   </entry>
