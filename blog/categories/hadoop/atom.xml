@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Hadoop | Aries's Blog]]></title>
+  <link href="http://idflai.github.io/blog/categories/hadoop/atom.xml" rel="self"/>
+  <link href="http://idflai.github.io/"/>
+  <updated>2014-01-17T13:52:59+08:00</updated>
+  <id>http://idflai.github.io/</id>
+  <author>
+    <name><![CDATA[Aries]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Hive Imp/exp]]></title>
+    <link href="http://idflai.github.io/blog/2014/01/17/hive-imp-slash-exp/"/>
+    <updated>2014-01-17T13:47:11+08:00</updated>
+    <id>http://idflai.github.io/blog/2014/01/17/hive-imp-slash-exp</id>
+    <content type="html"><![CDATA[<p>一、hive数据导出   <!--more-->
+1.将select的结果放到一个的的表格中（首先要用create table创建新的表格）
+<code>
+insert overwrite table test
+select uid,name from test2;
+</code></p>
+
+<p>2.将select的结果放到本地文件系统中
+<code>
+INSERT OVERWRITE LOCAL DIRECTORY '/tmp/reg_3' SELECT a.* FROM events a;
+</code></p>
+
+<p>3.将select的结果放到hdfs文件系统中
+<code>
+INSERT OVERWRITE DIRECTORY '/tmp/hdfs_out' SELECT a.* FROM invites a WHERE
+a.ds='&lt;DATE&gt;';
+</code>
+二、hive数据导入
+<code>
+CREATE TABLE logs(logs string);
+LOAD DATA [LOCAL] INPATH '/data/userdata' [OVERWRITE] INTO TABLE logs;
+</code>
+直接从从其它的表拖数据过来
+<code>
+INSERT OVERWRITE TABLE TMP_T1 SELECT * FROM TMP_T2;
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -5,12 +5,16 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My First Octopress Blog - Aries's Blog</title>
+  <title>Hive Imp/exp - Aries's Blog</title>
   <meta name="author" content="Aries">
 
   
-  <meta name="description" content="My first blog">
-  <meta name="keywords" content="Octopress">
+  <meta name="description" content="一、hive数据导出 1.将select的结果放到一个的的表格中（首先要用create table创建新的表格） 1
+2
+insert overwrite table test
+select uid,name from test2; 2.将select的结果放到本地文件系统中 1
+INSERT &hellip;">
+  
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +22,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://idflai.github.io/blog/2014/01/12/my-first-octopress-blog">
+  <link rel="canonical" href="http://idflai.github.io/blog/2014/01/17/hive-imp-slash-exp">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Aries's Blog" type="application/atom+xml">
@@ -70,7 +74,7 @@
   
   <header>
     
-      <h1 class="entry-title">My First Octopress Blog</h1>
+      <h1 class="entry-title">Hive Imp/exp</h1>
     
     
       <p class="meta">
@@ -86,7 +90,7 @@
   
 
 
-<time datetime="2014-01-12T17:54:36+08:00" pubdate data-updated="true">Jan 12<span>th</span>, 2014</time>
+<time datetime="2014-01-17T13:47:11+08:00" pubdate data-updated="true">Jan 17<span>th</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://idflai.github.io">Comments</a>
@@ -96,95 +100,42 @@
   </header>
 
 
-<div class="entry-content"><p>突然想利用Blog记录自己工作上的一些心得以及作为一个FAQ，然后从同事那里得知了这么一个平台，于是开始试着折腾（windows下搭建这个真的挺麻烦的）。
-先记录下自己搭建的过程吧。 <!--more--></p>
-
-<p>参考文章：   <br />
-<a href="http://www.cnblogs.com/oec2003/archive/2013/05/27/3100896.html">http://www.cnblogs.com/oec2003/archive/2013/05/27/3100896.html</a>    <br />
-<a href="http://www.cnblogs.com/oec2003/archive/2013/05/31/3109577.html">http://www.cnblogs.com/oec2003/archive/2013/05/31/3109577.html</a></p>
-
-<p>一、下载相应的软件</p>
-
-<p>本人用的是Windows 8.1</p>
-
-<p>GitHub for windows: <a href="https://github-windows.s3.amazonaws.com/GitHubSetup.exe">https://github-windows.s3.amazonaws.com/GitHubSetup.exe</a>   <br />
-Ruby: <a href="http://rubyforge.org/frs/download.php/76798/rubyinstaller-1.9.3-p392.exe">http://rubyforge.org/frs/download.php/76798/rubyinstaller-1.9.3-p392.exe</a>  <br />
-DevKit: <a href="http://cloud.github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">http://cloud.github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a>   <br />
-Python：<a href="http://www.python.org/ftp/python/2.7.5/python-2.7.5.msi">http://www.python.org/ftp/python/2.7.5/python-2.7.5.msi</a>(貌似是用来高亮语法用的，可以暂时不装)   <br />
-Octopress: git://github.com/imathis/octopress.git(先不用下)</p>
-
-<p>二、安装软件</p>
-
-<p>GitHub    <br />
-直接安装，也没什么选的。</p>
-
-<p>Ruby    <br />
-要在DevKit之前安装。安装的时候有个步骤有选项，我只选了前两个</p>
-
-<p>DevKit    <br />
-解压，路径中没有中文，然后在命令行中进入到DevKit的目录下安装    <br />
-例如：</p>
+<div class="entry-content"><p>一、hive数据导出   <!--more-->
+1.将select的结果放到一个的的表格中（首先要用create table创建新的表格）</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd E:\DevKit  
-</span><span class='line'>e:  
-</span><span class='line'>ruby dk.rb init   
-</span><span class='line'>ruby dk.rb install    </span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>insert overwrite table test
+</span><span class='line'>select uid,name from test2;</span></code></pre></td></tr></table></div></figure>
 
 
-<p>我没装Python……所以请参照参考文章</p>
+<p>2.将select的结果放到本地文件系统中</p>
 
-<p>Octopress    <br />
-我在E盘专门建立了个GitHub文件夹放blog的工程文件</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>INSERT OVERWRITE LOCAL DIRECTORY '/tmp/reg_3' SELECT a.* FROM events a;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>3.将select的结果放到hdfs文件系统中</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd E:\GitHub    
-</span><span class='line'>git clone git://github.com/imathis/octopress.git octopress     </span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>INSERT OVERWRITE DIRECTORY '/tmp/hdfs_out' SELECT a.* FROM invites a WHERE 
+</span><span class='line'>a.ds='&lt;DATE&gt;';</span></code></pre></td></tr></table></div></figure>
 
 
-<p>安装octopress的依赖项。我没有更换source。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>gem install bundler   
-</span><span class='line'>bundle install    </span></code></pre></td></tr></table></div></figure>
-
-
-<p>安装octopress默认主题</p>
-
-<p>rake install</p>
-
-<p>然后可以预览了</p>
-
-<p>rake preview</p>
-
-<p>在浏览器中打开local:4000就可以看到blog的原始页面</p>
-
-<p>三、使用中文</p>
-
-<p>如果要在blog中使用中文，需要做些设置。</p>
-
-<p>1.添加系统环境变量</p>
+<p>二、hive数据导入</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>LANG=zh_CN.UTF-8     
-</span><span class='line'>LC_ALL=zh_CN.UTF-8</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE TABLE logs(logs string);
+</span><span class='line'>LOAD DATA [LOCAL] INPATH '/data/userdata' [OVERWRITE] INTO TABLE logs;</span></code></pre></td></tr></table></div></figure>
 
 
-<p>2.含有中文的文档要保存成UTF-8无BOM编码格式。     <br />
-win的记事本无法做到，推荐使用UltraEdit     <br />
-<a href="http://down.05sun.com/crack/UltraEdit_SC.rar">http://down.05sun.com/crack/UltraEdit_SC.rar</a></p>
+<p>直接从从其它的表拖数据过来</p>
 
-<p>3.在ruby安装路径下找到文件convertible.rb    <br />
-例如：     <br />
-E:\Ruby193\lib\ruby\gems\1.9.1\gems\jekyll-0.12.0\lib\jekyll\convertible.rb    <br />
-把self.content这行修改成     <br />
-self.content = File.read(File.join(base, name), :encoding => &lsquo;utf-8&rsquo;)</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>INSERT OVERWRITE TABLE TMP_T1 SELECT * FROM TMP_T2;</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -207,12 +158,12 @@ self.content = File.read(File.join(base, name), :encoding => &lsquo;utf-8&rsquo;
   
 
 
-<time datetime="2014-01-12T17:54:36+08:00" pubdate data-updated="true">Jan 12<span>th</span>, 2014</time>
+<time datetime="2014-01-17T13:47:11+08:00" pubdate data-updated="true">Jan 17<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/octopress/'>Octopress</a>
+    <a class='category' href='/blog/categories/hadoop/'>hadoop</a>
   
 </span>
 
@@ -228,8 +179,8 @@ self.content = File.read(File.join(base, name), :encoding => &lsquo;utf-8&rsquo;
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2014/01/12/my-first-octopress-blog/" title="Previous Post: my first octopress blog">&laquo; my first octopress blog</a>
       
-        <a class="basic-alignment right" href="/blog/2014/01/17/hive-imp-slash-exp/" title="Next Post: hive imp/exp">hive imp/exp &raquo;</a>
       
     </p>
   </footer>
@@ -294,8 +245,8 @@ self.content = File.read(File.join(base, name), :encoding => &lsquo;utf-8&rsquo;
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://idflai.github.io/blog/2014/01/12/my-first-octopress-blog/';
-        var disqus_url = 'http://idflai.github.io/blog/2014/01/12/my-first-octopress-blog/';
+        var disqus_identifier = 'http://idflai.github.io/blog/2014/01/17/hive-imp-slash-exp/';
+        var disqus_url = 'http://idflai.github.io/blog/2014/01/17/hive-imp-slash-exp/';
         var disqus_script = 'embed.js';
       
     (function () {
