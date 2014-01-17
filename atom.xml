@@ -4,7 +4,7 @@
   <title><![CDATA[Aries's Blog]]></title>
   <link href="http://idflai.github.io/atom.xml" rel="self"/>
   <link href="http://idflai.github.io/"/>
-  <updated>2014-01-17T13:52:59+08:00</updated>
+  <updated>2014-01-17T14:21:51+08:00</updated>
   <id>http://idflai.github.io/</id>
   <author>
     <name><![CDATA[Aries]]></name>
@@ -12,6 +12,148 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[RHElinux Based Cluster Configure]]></title>
+    <link href="http://idflai.github.io/blog/2014/01/17/RHElinux-based-cluster-configure/"/>
+    <updated>2014-01-17T13:58:42+08:00</updated>
+    <id>http://idflai.github.io/blog/2014/01/17/RHElinux-based-cluster-configure</id>
+    <content type="html"><![CDATA[<p>简单记录下在RHEL上做cluster的初始配置，包括固定ip和配置ssh <!--more--></p>
+
+<p>一、固定ip修改主机名</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#修改网卡eth0
+</span><span class='line'>vi /etc/sysconfig/network-scripts/ifcfg-eth0 
+</span><span class='line'>#固定ip
+</span><span class='line'>IPADDR=192.168.2.105
+</span><span class='line'>#修改hostname
+</span><span class='line'>vi /etc/sysconfig/network
+</span><span class='line'>#内容如下
+</span><span class='line'>NETWORKING=yes
+</span><span class='line'>HOSTNAME=master
+</span><span class='line'>GATEWAY=192.168.2.1
+</span><span class='line'>#slave机器用同样方法配置
+</span><span class='line'>#在hosts文件里添加cluster机器的ip和hostname
+</span><span class='line'>vi /etc/hosts
+</span><span class='line'>#内容如下
+</span><span class='line'>127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+</span><span class='line'>::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+</span><span class='line'>
+</span><span class='line'>192.168.2.105 master
+</span><span class='line'>192.168.2.107 slave01</span></code></pre></td></tr></table></div></figure>
+
+
+<p>hosts文件可以用scp命令复制到cluster的机器上   <br />
+二、配置ssh无密码登录</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#在master机器上生成密码对，生成id_rsa和id_rsa.pub两个文件，默认存放在/root/.ssh下
+</span><span class='line'>ssh-keygen -t rsa -P ''
+</span><span class='line'>#将id_rsa.pub添加到authorized_keys里
+</span><span class='line'>cat ~/.ssh/id_rsa.pub &gt;&gt;~/.ssh/authorized_keys
+</span><span class='line'>#修改authorized_keys权限
+</span><span class='line'>chmod 600 ~/.ssh/authorized_keys
+</span><span class='line'>#修改ssh配置文件
+</span><span class='line'>vi /etc/ssh/sshd_config
+</span><span class='line'>#去掉下面三行的注释
+</span><span class='line'>RSAAuthentication yes
+</span><span class='line'>PubkeyAuthentication yes
+</span><span class='line'>AuthorizedKeysFile .ssh/authorized_keys 
+</span><span class='line'>#重启ssh
+</span><span class='line'>service sshd restart
+</span><span class='line'>#验证是否连通
+</span><span class='line'>ssh master
+</span><span class='line'>
+</span><span class='line'>#将公钥复制到slave机器上
+</span><span class='line'>scp ~/.ssh/id_rsa.pub root@192.168.0.105:~/
+</span><span class='line'>#修改.ssh权限
+</span><span class='line'>chmod 700 ~/.ssh
+</span><span class='line'>#追加授权文件
+</span><span class='line'>cat ~/.id_rsa.pub &gt;&gt;~/.ssh/authorized_keys
+</span><span class='line'>#修改权限
+</span><span class='line'>chmod 600 ~/.ssh/authorized_keys
+</span><span class='line'>#修改ssh配置文件并重启ssh并验证并删除master复制过来的id_rsa.pub
+</span><span class='line'>#在slave机器上生成密钥并按照上面的方法将公钥放到master上</span></code></pre></td></tr></table></div></figure>
+
+
+<p>二、安装配置java  <br /></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#安装java
+</span><span class='line'>./jdk-6u31-linux-x64.bin
+</span><span class='line'>#修改环境变量
+</span><span class='line'>vi /etc/profile
+</span><span class='line'>#添加java环境变量
+</span><span class='line'>#set Java path
+</span><span class='line'>export JAVA_HOME=/usr/java/jdk1.6.0_31
+</span><span class='line'>exportCLASSPATH=$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
+</span><span class='line'>exportPATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
+</span><span class='line'>#保存退出，使配置文件生效
+</span><span class='line'>source /etc/profile
+</span><span class='line'>#验证
+</span><span class='line'>java -version</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以上です。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hive Imp/exp]]></title>

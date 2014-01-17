@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>RHElinux Based Cluster Configure - Aries's Blog</title>
+  <meta name="author" content="Aries">
+
+  
+  <meta name="description" content="简单记录下在RHEL上做cluster的初始配置，包括固定ip和配置ssh 一、固定ip修改主机名 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+#修改网卡eth0
+vi /etc/sysconfig/network-scripts/ifcfg- &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://idflai.github.io/blog/2014/01/17/RHElinux-based-cluster-configure">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Aries's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Aries's Blog</a></h1>
+  
+    <h2>One for all, all for one.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:idflai.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">RHElinux Based Cluster Configure</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-17T13:58:42+08:00" pubdate data-updated="true">Jan 17<span>th</span>, 2014</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://idflai.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>简单记录下在RHEL上做cluster的初始配置，包括固定ip和配置ssh <!--more--></p>
+
+<p>一、固定ip修改主机名</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#修改网卡eth0
+</span><span class='line'>vi /etc/sysconfig/network-scripts/ifcfg-eth0 
+</span><span class='line'>#固定ip
+</span><span class='line'>IPADDR=192.168.2.105
+</span><span class='line'>#修改hostname
+</span><span class='line'>vi /etc/sysconfig/network
+</span><span class='line'>#内容如下
+</span><span class='line'>NETWORKING=yes
+</span><span class='line'>HOSTNAME=master
+</span><span class='line'>GATEWAY=192.168.2.1
+</span><span class='line'>#slave机器用同样方法配置
+</span><span class='line'>#在hosts文件里添加cluster机器的ip和hostname
+</span><span class='line'>vi /etc/hosts
+</span><span class='line'>#内容如下
+</span><span class='line'>127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+</span><span class='line'>::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+</span><span class='line'>
+</span><span class='line'>192.168.2.105 master
+</span><span class='line'>192.168.2.107 slave01</span></code></pre></td></tr></table></div></figure>
+
+
+<p>hosts文件可以用scp命令复制到cluster的机器上   <br />
+二、配置ssh无密码登录</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#在master机器上生成密码对，生成id_rsa和id_rsa.pub两个文件，默认存放在/root/.ssh下
+</span><span class='line'>ssh-keygen -t rsa -P ''
+</span><span class='line'>#将id_rsa.pub添加到authorized_keys里
+</span><span class='line'>cat ~/.ssh/id_rsa.pub &gt;&gt;~/.ssh/authorized_keys
+</span><span class='line'>#修改authorized_keys权限
+</span><span class='line'>chmod 600 ~/.ssh/authorized_keys
+</span><span class='line'>#修改ssh配置文件
+</span><span class='line'>vi /etc/ssh/sshd_config
+</span><span class='line'>#去掉下面三行的注释
+</span><span class='line'>RSAAuthentication yes
+</span><span class='line'>PubkeyAuthentication yes
+</span><span class='line'>AuthorizedKeysFile .ssh/authorized_keys 
+</span><span class='line'>#重启ssh
+</span><span class='line'>service sshd restart
+</span><span class='line'>#验证是否连通
+</span><span class='line'>ssh master
+</span><span class='line'>
+</span><span class='line'>#将公钥复制到slave机器上
+</span><span class='line'>scp ~/.ssh/id_rsa.pub root@192.168.0.105:~/
+</span><span class='line'>#修改.ssh权限
+</span><span class='line'>chmod 700 ~/.ssh
+</span><span class='line'>#追加授权文件
+</span><span class='line'>cat ~/.id_rsa.pub &gt;&gt;~/.ssh/authorized_keys
+</span><span class='line'>#修改权限
+</span><span class='line'>chmod 600 ~/.ssh/authorized_keys
+</span><span class='line'>#修改ssh配置文件并重启ssh并验证并删除master复制过来的id_rsa.pub
+</span><span class='line'>#在slave机器上生成密钥并按照上面的方法将公钥放到master上</span></code></pre></td></tr></table></div></figure>
+
+
+<p>二、安装配置java  <br /></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#安装java
+</span><span class='line'>./jdk-6u31-linux-x64.bin
+</span><span class='line'>#修改环境变量
+</span><span class='line'>vi /etc/profile
+</span><span class='line'>#添加java环境变量
+</span><span class='line'>#set Java path
+</span><span class='line'>export JAVA_HOME=/usr/java/jdk1.6.0_31
+</span><span class='line'>exportCLASSPATH=$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
+</span><span class='line'>exportPATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
+</span><span class='line'>#保存退出，使配置文件生效
+</span><span class='line'>source /etc/profile
+</span><span class='line'>#验证
+</span><span class='line'>java -version</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以上です。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Aries</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-17T13:58:42+08:00" pubdate data-updated="true">Jan 17<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/01/17/hive-imp-slash-exp/" title="Previous Post: hive imp/exp">&laquo; hive imp/exp</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section> 
+  <h1>Categories</h1> 
+  <ul id="categories"> 
+    <li class='category'><a href='/blog/categories/octopress/'>Octopress (1)</a></li>
+<li class='category'><a href='/blog/categories/hadoop/'>hadoop (1)</a></li>
+<li class='category'><a href='/blog/categories/linux/'>linux (1)</a></li>
+ 
+  </ul> 
+</section><section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/01/17/RHElinux-based-cluster-configure/">RHElinux Based Cluster Configure</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/17/hive-imp-slash-exp/">Hive Imp/exp</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/12/my-first-octopress-blog/">My First Octopress Blog</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Recent Comments</h1>
+  <script type="text/javascript" src="http://http://idflaigithubio.disqus.com/recent_comments_widget.js?num_items=10&hide_avatars=0&avatar_size=32&excerpt_length=200"></script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Aries -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'idflaigithubio';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://idflai.github.io/blog/2014/01/17/RHElinux-based-cluster-configure/';
+        var disqus_url = 'http://idflai.github.io/blog/2014/01/17/RHElinux-based-cluster-configure/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

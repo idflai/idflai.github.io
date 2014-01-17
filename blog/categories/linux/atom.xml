@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Linux | Aries's Blog]]></title>
+  <link href="http://idflai.github.io/blog/categories/linux/atom.xml" rel="self"/>
+  <link href="http://idflai.github.io/"/>
+  <updated>2014-01-17T14:21:51+08:00</updated>
+  <id>http://idflai.github.io/</id>
+  <author>
+    <name><![CDATA[Aries]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[RHElinux Based Cluster Configure]]></title>
+    <link href="http://idflai.github.io/blog/2014/01/17/RHElinux-based-cluster-configure/"/>
+    <updated>2014-01-17T13:58:42+08:00</updated>
+    <id>http://idflai.github.io/blog/2014/01/17/RHElinux-based-cluster-configure</id>
+    <content type="html"><![CDATA[<p>简单记录下在RHEL上做cluster的初始配置，包括固定ip和配置ssh <!--more--></p>
+
+<p>一、固定ip修改主机名
+```</p>
+
+<h1>修改网卡eth0</h1>
+
+<p>vi /etc/sysconfig/network-scripts/ifcfg-eth0</p>
+
+<h1>固定ip</h1>
+
+<p>IPADDR=192.168.2.105</p>
+
+<h1>修改hostname</h1>
+
+<p>vi /etc/sysconfig/network</p>
+
+<h1>内容如下</h1>
+
+<p>NETWORKING=yes
+HOSTNAME=master
+GATEWAY=192.168.2.1</p>
+
+<h1>slave机器用同样方法配置</h1>
+
+<h1>在hosts文件里添加cluster机器的ip和hostname</h1>
+
+<p>vi /etc/hosts</p>
+
+<h1>内容如下</h1>
+
+<p>127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</p>
+
+<p>192.168.2.105 master
+192.168.2.107 slave01
+<code>
+hosts文件可以用scp命令复制到cluster的机器上   &lt;br /&gt;
+二、配置ssh无密码登录
+</code></p>
+
+<h1>在master机器上生成密码对，生成id_rsa和id_rsa.pub两个文件，默认存放在/root/.ssh下</h1>
+
+<p>ssh-keygen -t rsa -P &lsquo;&rsquo;</p>
+
+<h1>将id_rsa.pub添加到authorized_keys里</h1>
+
+<p>cat ~/.ssh/id_rsa.pub >>~/.ssh/authorized_keys</p>
+
+<h1>修改authorized_keys权限</h1>
+
+<p>chmod 600 ~/.ssh/authorized_keys</p>
+
+<h1>修改ssh配置文件</h1>
+
+<p>vi /etc/ssh/sshd_config</p>
+
+<h1>去掉下面三行的注释</h1>
+
+<p>RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys</p>
+
+<h1>重启ssh</h1>
+
+<p>service sshd restart</p>
+
+<h1>验证是否连通</h1>
+
+<p>ssh master</p>
+
+<h1>将公钥复制到slave机器上</h1>
+
+<p>scp ~/.ssh/id_rsa.pub root@192.168.0.105:~/</p>
+
+<h1>修改.ssh权限</h1>
+
+<p>chmod 700 ~/.ssh</p>
+
+<h1>追加授权文件</h1>
+
+<p>cat ~/.id_rsa.pub >>~/.ssh/authorized_keys</p>
+
+<h1>修改权限</h1>
+
+<p>chmod 600 ~/.ssh/authorized_keys</p>
+
+<h1>修改ssh配置文件并重启ssh并验证并删除master复制过来的id_rsa.pub</h1>
+
+<h1>在slave机器上生成密钥并按照上面的方法将公钥放到master上</h1>
+
+<p><code>
+二、安装配置java  &lt;br /&gt;
+</code></p>
+
+<h1>安装java</h1>
+
+<p>./jdk-6u31-linux-x64.bin</p>
+
+<h1>修改环境变量</h1>
+
+<p>vi /etc/profile</p>
+
+<h1>添加java环境变量</h1>
+
+<h1>set Java path</h1>
+
+<p>export JAVA_HOME=/usr/java/jdk1.6.0_31
+exportCLASSPATH=$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
+exportPATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH</p>
+
+<h1>保存退出，使配置文件生效</h1>
+
+<p>source /etc/profile</p>
+
+<h1>验证</h1>
+
+<p>java -version
+```
+以上です。</p>
+]]></content>
+  </entry>
+  
+</feed>
